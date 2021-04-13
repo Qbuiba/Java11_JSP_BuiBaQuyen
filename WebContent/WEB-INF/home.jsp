@@ -1,3 +1,4 @@
+<%@page import="cybersoft.java11.utils.PathConst"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <!DOCTYPE html>
@@ -17,5 +18,9 @@
 	<%if(request.getAttribute("userMessage")!=null){ %>
 		<h2><%= request.getAttribute("userMessage") %></h2>
 	<%} %>
+	
+	
+	
+	<a href="<%=request.getContextPath()+PathConst.USER_DASHBOARD%>">Go to USER PAGE</a>
 </body>
 </html>

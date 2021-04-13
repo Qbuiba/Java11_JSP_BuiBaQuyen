@@ -8,45 +8,38 @@
   <title>User Dashboard</title>
   <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css"
     integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.css" integrity="sha512-5A8nwdMOWrSz20fDsjczgUidUBR8liPYU+WymTZP1lmY9G6Oc7HlZv156XqnsgNUzTyMefFTcsFH/tnJE/+xBg==" crossorigin="anonymous" />
+    <link rel="stylesheet" href="https://pro.fontawesome.com/releases/v5.10.0/css/all.css" integrity="sha384-AYmEC3Yw5cVb3ZcuHtOA93w35dYTsvhLPVnYs9eStHfGJvOvKxVfELGroGkvsg+p" crossorigin="anonymous"/>
 </head>
 
 <body>
   <div class="container">
-    <h1 class="p-4 text-center text-uppercase text-primary">User Dashboard</h1>
+    <h1 class="p-4 text-center text-uppercase text-warning">Add New User</h1>
     <div class="mb-2 ml-2">
-      <a class="btn btn-danger" href="">Add User</a>
-      <a href="" class="btn btn-warning">Search</a>
+      <form method="POST" action="">
+      <p>
+        <label for="hoVaTen">Họ và Tên </label>
+        <input type="text" placeholder="họ và tên"    name="hoVaTen" required>
+      </p>
+      <p>
+        <label for="namSinh">Năm Sinh </label>
+        <input type="text" placeholder="năm sinh"  name="namSinh" required>
+      </p>
+      <p>
+        <label for="username">Username </label>
+        <input type="text" placeholder="username"  name="username" required>
+      </p>
+      <p>
+        <label for="password">Password </label>
+        <input type="password" placeholder="password"  name="password" required>
+      </p>
+      <p>
+        <label for="chucVu">Chức Vụ </label>
+        <input type="text" placeholder="chức vụ"  name="chucVu" required>
+      </p>
     </div>
-
-    <table class="table">
-      <thead>
-        <tr class="row text-center">
-          <th class="col-3">Fullname</th>
-          <th class="col-2">Username</th>
-          <th class="col-2">Role</th>
-          <th class="col-2">Birthday</th>
-          <th class="col-3">Function</th>
-        </tr>
-      </thead>
-      <tbody>
-        <tr class="row text-center">
-          <td class="col-3">Tran Toan Nguyen</td>
-          <td class="col-2">toantran</td>
-          <td class="col-2">Senior</td>
-          <td class="col-2">1991</td>
-          <td class="col-3">
-            <a class="btn btn-warning" href="">
-              <i class="fa fa-edit"></i>
-            </a>
-            
-            <a href="" class="btn btn-danger">
-              <i class="fa fa-trash" aria-hidden="true"></i>
-            </a>
-          </td>
-        </tr>
-      </tbody>
-    </table>
+    <input type="submit" value="ADD">
+    </form>
+      
   </div>
 
   <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"

@@ -3,6 +3,7 @@ package cybersoft.java11.servlet;
 import java.io.IOException;
 import java.util.List;
 
+import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -31,7 +32,6 @@ public class UserServlet extends HttpServlet {
 	@Override
 	public void init() throws ServletException {
 		// TODO Auto-generated method stub
-		super.init();
 		userController = new UserController();
 	}
 
@@ -52,7 +52,11 @@ public class UserServlet extends HttpServlet {
 			break;
 
 		case PathConst.USER_ADD:
-			req.getRequestDispatcher(UrlConstant.USER_ADD).forward(req, resp);
+			RequestDispatcher rd = getServletContext().getRequestDispatcher(UrlConstant.USER_ADD);
+			rd.forward(req, resp);
+			
+//			req.getRequestDispatcher(UrlConstant.USER_ADD).forward(req, resp);;
+//			req.getRequestDispatcher(UrlConstant.USER_ADD).forward(req, resp);
 			break;
 
 		case PathConst.USER_EDIT:
@@ -61,14 +65,25 @@ public class UserServlet extends HttpServlet {
 
 		case PathConst.USER_DELETE:
 			String username = req.getParameter("username");
-			System.out.println("username need to be deleted  " + req.getParameter("username"));
-			req.getRequestDispatcher(UrlConstant.USER_DELETE).forward(req, resp);
+			userController.remove(username);
+			
+			resp.sendRedirect(req.getContextPath()+PathConst.USER_DASHBOARD);
 			break;
+			
 
 		default:
 			break;
 
 		}
 	}
+	
+	@Override
+	protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+		User user = new User( req.getParameter("fullname"), Integer.parseInt(req.getParameter("dayofbirth")), req.getParameter("username"),req.getParameter("password"), Integer.parseInt( req.getParameter("role")));
+		userController.add(user);
+		
+		resp.sendRedirect(req.getContextPath()+PathConst.USER_DASHBOARD);
+	}
+	
 
 }

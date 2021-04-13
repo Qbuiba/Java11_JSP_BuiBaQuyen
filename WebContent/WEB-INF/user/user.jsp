@@ -22,7 +22,7 @@
   <div class="container">
     <h1 class="p-4 text-center text-uppercase text-primary">User Dashboard</h1>
     <div class="mb-2 ml-2">
-      <a class="btn btn-danger" href="">Add User</a>
+      <a class="btn btn-danger" href="<%=request.getContextPath() + PathConst.USER_ADD %>">Add User</a>
       <a href="" class="btn btn-warning">Search</a>
     </div>
 	
@@ -53,7 +53,7 @@
             <a class="btn btn-warning" href="">
               <i class="fa fa-edit"></i>
             </a>
-            <a href="" class="btn btn-danger">
+            <a href="<%=request.getContextPath() + PathConst.USER_DELETE %>?username=<%=user.getUsername() %>" class="btn btn-danger">
               <i class="fa fa-trash" aria-hidden="true"></i>
             </a>
           </td>
