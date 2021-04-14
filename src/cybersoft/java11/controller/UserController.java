@@ -32,7 +32,7 @@ public class UserController {
 		if (user == null) {
 			return 0;// user is null
 		}
-		if (user.getUsername() == null || user.getPassword() == null) {
+		if ("".equals(user.getUsername()) || "".equals(user.getPassword())) {
 			return 2;// user is null
 		}
 		for (User e : userList) {

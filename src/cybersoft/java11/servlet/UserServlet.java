@@ -42,10 +42,10 @@ public class UserServlet extends HttpServlet {
 	protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 
 		String servletPath = req.getServletPath();
+		List<User> userList = userController.findAll();
 
 		switch (servletPath) {
 		case PathConst.USER_DASHBOARD:
-			List<User> userList = userController.findAll();
 
 			req.setAttribute("userList", userList);
 			req.getRequestDispatcher(UrlConstant.USER_DASHBOARD).forward(req, resp);
@@ -54,36 +54,69 @@ public class UserServlet extends HttpServlet {
 		case PathConst.USER_ADD:
 			RequestDispatcher rd = getServletContext().getRequestDispatcher(UrlConstant.USER_ADD);
 			rd.forward(req, resp);
-			
-//			req.getRequestDispatcher(UrlConstant.USER_ADD).forward(req, resp);;
-//			req.getRequestDispatcher(UrlConstant.USER_ADD).forward(req, resp);
+
 			break;
 
 		case PathConst.USER_EDIT:
+			String editUser = req.getParameter("username");
+			User reqUser = null;
+			for (User user : userList) {
+				if (user.getUsername().equals(editUser)) {
+					reqUser = user;
+					break;
+				}
+			}
+			req.setAttribute("reqUser", reqUser);
 			req.getRequestDispatcher(UrlConstant.USER_EDIT).forward(req, resp);
 			break;
 
 		case PathConst.USER_DELETE:
 			String username = req.getParameter("username");
 			userController.remove(username);
-			
-			resp.sendRedirect(req.getContextPath()+PathConst.USER_DASHBOARD);
+
+			resp.sendRedirect(req.getContextPath() + PathConst.USER_DASHBOARD);
 			break;
-			
 
 		default:
 			break;
 
 		}
 	}
-	
+
 	@Override
 	protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-		User user = new User( req.getParameter("fullname"), Integer.parseInt(req.getParameter("dayofbirth")), req.getParameter("username"),req.getParameter("password"), Integer.parseInt( req.getParameter("role")));
-		userController.add(user);
-		
-		resp.sendRedirect(req.getContextPath()+PathConst.USER_DASHBOARD);
+		String servletPath = req.getServletPath();
+
+		switch (servletPath) {
+		case PathConst.USER_ADD:
+			User user = new User(req.getParameter("fulname"), Integer.parseInt(req.getParameter("birthday")),
+					req.getParameter("username"), req.getParameter("password"),
+					Integer.parseInt(req.getParameter("role")));
+			int result = userController.add(user);
+
+			switch (result) {
+			case 1:
+				resp.sendRedirect(req.getContextPath() + PathConst.USER_DASHBOARD);
+				break;
+			case 2:
+				String errMsg = "username or password can not be null";
+				req.setAttribute("errMsg", errMsg);
+				req.setAttribute("user", user);
+				doGet(req, resp);
+				break;
+			case 3:
+				break;
+			default:
+				throw new IllegalArgumentException("Unexpected value: " + result);
+			}
+
+		case PathConst.USER_EDIT:
+			break;
+
+		default:
+			break;
+
+		}
 	}
-	
 
 }

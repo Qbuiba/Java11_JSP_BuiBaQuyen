@@ -4,6 +4,7 @@
     pageEncoding="UTF-8"%>
  <%@ page import="java.util.List" %>
  <%@ page import="cybersoft.java11.model.User" %>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <!DOCTYPE html>
 <html lang="en">
 
@@ -37,29 +38,35 @@
         </tr>
       </thead>
       <tbody>
-      <% if(userList==null){ %>
-      	<tr class="row text-center">
-      		<td>There is not data</td>
-      	</tr>
-      <%} else {
-      		for(User user: userList){
-       %>
-        <tr class="row text-center">
-          <td class="col-3"><%=user.getHoVaTen()%></td>
-          <td class="col-2"><%=user.getUsername()%></td>
-          <td class="col-2"><%=user.getChucVu()%></td>
-          <td class="col-2"><%=user.getNamSinh()%></td>
-          <td class="col-3">
-            <a class="btn btn-warning" href="">
-              <i class="fa fa-edit"></i>
-            </a>
-            <a href="<%=request.getContextPath() + PathConst.USER_DELETE %>?username=<%=user.getUsername() %>" class="btn btn-danger">
-              <i class="fa fa-trash" aria-hidden="true"></i>
-            </a>
-          </td>
-        </tr>
-        <%}
-      	}%>
+      	<c:if test="${userList.size()==0 }">
+      		
+      	</c:if>
+		<c:forEach var="currUser" items="${userList}">
+			<tr class="row text-center">
+	          <td class="col-3">${currUser.hoVaTen}</td>
+	          <td class="col-2">${currUser.username}</td>
+	          <td class="col-2">
+	          	<c:if test="${user.chucVu==0}">
+	          		Customer	
+	          	</c:if>
+	          	<c:if test="${user.chucVu==1}">
+	          		Staff	
+	          	</c:if>
+	          	<c:if test="${user.chucVu==2}">
+	          		Manager	
+	          	</c:if>
+	          </td>
+	          <td class="col-2">${currUser.namSinh}</td>
+	          <td class="col-3">
+	            <a class="btn btn-warning" href="<c:url value="${PathConst.USER_EDIT}?username=${currUser.username}"/>" >
+	              <i class="fa fa-edit"></i>
+	            </a>
+	            <a href="<%=request.getContextPath() + PathConst.USER_DELETE %>?username=${currUser.username}" class="btn btn-danger">
+	              <i class="fa fa-trash" aria-hidden="true"></i>
+	            </a>
+	          </td>
+        	</tr>
+		</c:forEach>
       </tbody>
     </table>
   </div>
