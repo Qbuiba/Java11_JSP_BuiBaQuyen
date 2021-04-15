@@ -42,21 +42,15 @@ public class UserServlet extends HttpServlet {
 	protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 
 		String servletPath = req.getServletPath();
-		List<User> userList = userController.findAll();
 
 		switch (servletPath) {
 		case PathConst.USER_DASHBOARD:
-<<<<<<< HEAD
 			userList = userController.findAll();
-=======
-
->>>>>>> e82b6ab4c85c24f994a47dd01e67afffbb636d6e
 			req.setAttribute("userList", userList);
 			req.getRequestDispatcher(UrlConstant.USER_DASHBOARD).forward(req, resp);
 			break;
 
 		case PathConst.USER_ADD:
-<<<<<<< HEAD
 			req.getRequestDispatcher(UrlConstant.USER_ADD).forward(req, resp);
 			break;
 
@@ -64,24 +58,8 @@ public class UserServlet extends HttpServlet {
 			String editUserName = req.getParameter("username");
 			User curUser = findUser(editUserName);
 			req.setAttribute("user", curUser);
-=======
-			RequestDispatcher rd = getServletContext().getRequestDispatcher(UrlConstant.USER_ADD);
-			rd.forward(req, resp);
-
-			break;
-
-		case PathConst.USER_EDIT:
-			String editUser = req.getParameter("username");
-			User reqUser = null;
-			for (User user : userList) {
-				if (user.getUsername().equals(editUser)) {
-					reqUser = user;
-					break;
-				}
-			}
-			req.setAttribute("reqUser", reqUser);
->>>>>>> e82b6ab4c85c24f994a47dd01e67afffbb636d6e
 			req.getRequestDispatcher(UrlConstant.USER_EDIT).forward(req, resp);
+
 			break;
 
 		case PathConst.USER_DELETE:
@@ -97,7 +75,6 @@ public class UserServlet extends HttpServlet {
 		}
 	}
 
-<<<<<<< HEAD
 	private User findUser(String editUserName) {
 		User user = null;
 		for (User e : userList) {
@@ -111,16 +88,10 @@ public class UserServlet extends HttpServlet {
 
 	@Override
 	protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-
-=======
-	@Override
-	protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
->>>>>>> e82b6ab4c85c24f994a47dd01e67afffbb636d6e
 		String servletPath = req.getServletPath();
 
 		switch (servletPath) {
 		case PathConst.USER_ADD:
-<<<<<<< HEAD
 			User addUser = new User(req.getParameter("fullname"), Integer.parseInt(req.getParameter("yearofbirth")),
 					req.getParameter("username"), req.getParameter("password"),
 					Integer.parseInt(req.getParameter("role")));
@@ -143,39 +114,7 @@ public class UserServlet extends HttpServlet {
 			resp.sendRedirect(req.getContextPath() + PathConst.USER_DASHBOARD);
 			break;
 		default:
-			throw new IllegalArgumentException("Unexpected value: " + servletPath);
 		}
-
-=======
-			User user = new User(req.getParameter("fulname"), Integer.parseInt(req.getParameter("birthday")),
-					req.getParameter("username"), req.getParameter("password"),
-					Integer.parseInt(req.getParameter("role")));
-			int result = userController.add(user);
-
-			switch (result) {
-			case 1:
-				resp.sendRedirect(req.getContextPath() + PathConst.USER_DASHBOARD);
-				break;
-			case 2:
-				String errMsg = "username or password can not be null";
-				req.setAttribute("errMsg", errMsg);
-				req.setAttribute("user", user);
-				doGet(req, resp);
-				break;
-			case 3:
-				break;
-			default:
-				throw new IllegalArgumentException("Unexpected value: " + result);
-			}
-
-		case PathConst.USER_EDIT:
-			break;
-
-		default:
-			break;
-
-		}
->>>>>>> e82b6ab4c85c24f994a47dd01e67afffbb636d6e
 	}
 
 }

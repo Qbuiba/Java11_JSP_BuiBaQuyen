@@ -5,7 +5,6 @@
  <%@ page import="java.util.List" %>
  <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
  <%@ page import="cybersoft.java11.model.User" %>
-<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <!DOCTYPE html>
 <html lang="en">
 
@@ -38,7 +37,6 @@
         </tr>
       </thead>
       <tbody>
-<<<<<<< HEAD
       	<c:if test="${userList.size()==0}">
       		<tr class="row text-center">
       			<td>There is no any user !!!</td>
@@ -64,37 +62,6 @@
 	          </td>
 	        </tr>
 	  	</c:forEach>      
-=======
-      	<c:if test="${userList.size()==0 }">
-      		
-      	</c:if>
-		<c:forEach var="currUser" items="${userList}">
-			<tr class="row text-center">
-	          <td class="col-3">${currUser.hoVaTen}</td>
-	          <td class="col-2">${currUser.username}</td>
-	          <td class="col-2">
-	          	<c:if test="${user.chucVu==0}">
-	          		Customer	
-	          	</c:if>
-	          	<c:if test="${user.chucVu==1}">
-	          		Staff	
-	          	</c:if>
-	          	<c:if test="${user.chucVu==2}">
-	          		Manager	
-	          	</c:if>
-	          </td>
-	          <td class="col-2">${currUser.namSinh}</td>
-	          <td class="col-3">
-	            <a class="btn btn-warning" href="<c:url value="${PathConst.USER_EDIT}?username=${currUser.username}"/>" >
-	              <i class="fa fa-edit"></i>
-	            </a>
-	            <a href="<%=request.getContextPath() + PathConst.USER_DELETE %>?username=${currUser.username}" class="btn btn-danger">
-	              <i class="fa fa-trash" aria-hidden="true"></i>
-	            </a>
-	          </td>
-        	</tr>
-		</c:forEach>
->>>>>>> e82b6ab4c85c24f994a47dd01e67afffbb636d6e
       </tbody>
     </table>
   </div>
