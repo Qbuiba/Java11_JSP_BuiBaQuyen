@@ -8,7 +8,7 @@ public class User {
 	 * - Viết các lớp controller có các chức năng: Lấy ra danh sách user Tạo mới
 	 * user - Cập nhận thông tin user - Xóa user
 	 */
-	private String hoVaTen;
+	public String hoVaTen;
 	private int namSinh;
 	private String username;
 	private String password;

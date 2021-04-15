@@ -3,6 +3,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
  <%@ page import="java.util.List" %>
+ <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
  <%@ page import="cybersoft.java11.model.User" %>
 <!DOCTYPE html>
 <html lang="en">
@@ -18,18 +19,17 @@
 </head>
 
 <body>
-	<% List<User> userList = (List<User>) request.getAttribute("userList"); %>
   <div class="container">
     <h1 class="p-4 text-center text-uppercase text-primary">User Dashboard</h1>
     <div class="mb-2 ml-2">
-      <a class="btn btn-danger" href="<%=request.getContextPath() + PathConst.USER_ADD %>">Add User</a>
+      <a class="btn btn-danger" href="<c:url value="${PathConst.USER_ADD}"/>">Add User</a>
       <a href="" class="btn btn-warning">Search</a>
     </div>
 	
     <table class="table">
       <thead>
         <tr class="row text-center">
-          <th class="col-3">Fullname</th>
+          <th class="col-3">Full name</th>
           <th class="col-2">Username</th>
           <th class="col-2">Role</th>
           <th class="col-2">Birthday</th>
@@ -37,29 +37,31 @@
         </tr>
       </thead>
       <tbody>
-      <% if(userList==null){ %>
-      	<tr class="row text-center">
-      		<td>There is not data</td>
-      	</tr>
-      <%} else {
-      		for(User user: userList){
-       %>
-        <tr class="row text-center">
-          <td class="col-3"><%=user.getHoVaTen()%></td>
-          <td class="col-2"><%=user.getUsername()%></td>
-          <td class="col-2"><%=user.getChucVu()%></td>
-          <td class="col-2"><%=user.getNamSinh()%></td>
-          <td class="col-3">
-            <a class="btn btn-warning" href="">
-              <i class="fa fa-edit"></i>
-            </a>
-            <a href="<%=request.getContextPath() + PathConst.USER_DELETE %>?username=<%=user.getUsername() %>" class="btn btn-danger">
-              <i class="fa fa-trash" aria-hidden="true"></i>
-            </a>
-          </td>
-        </tr>
-        <%}
-      	}%>
+      	<c:if test="${userList.size()==0}">
+      		<tr class="row text-center">
+      			<td>There is no any user !!!</td>
+      		</tr>
+      	</c:if>
+	  	<c:forEach var="curUser" items="${userList}">
+	  		<tr class="row text-center">
+	          <td class="col-3">${curUser.hoVaTen}</td>
+	          <td class="col-2">${curUser.username}</td>
+	          <td class="col-2">
+	          	<c:if test="${curUser.chucVu==0}">Customer</c:if>
+	          	<c:if test="${curUser.chucVu==1}">Staff</c:if>
+	          	<c:if test="${curUser.chucVu==2}">Manager</c:if>
+	          </td>
+	          <td class="col-2">${curUser.namSinh}</td>
+	          <td class="col-3">
+	            <a class="btn btn-warning" href="<c:url value="${PathConst.USER_EDIT}"/>?username=${curUser.username}">
+	              <i class="fa fa-edit"></i>
+	            </a>
+	            <a href="<c:url value="${PathConst.USER_DELETE}"/>?username=${curUser.username}" class="btn btn-danger">
+	              <i class="fa fa-trash" aria-hidden="true"></i>
+	            </a>
+	          </td>
+	        </tr>
+	  	</c:forEach>      
       </tbody>
     </table>
   </div>
