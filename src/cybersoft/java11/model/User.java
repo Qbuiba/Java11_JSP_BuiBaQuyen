@@ -8,50 +8,25 @@ public class User {
 	 * - Viết các lớp controller có các chức năng: Lấy ra danh sách user Tạo mới
 	 * user - Cập nhận thông tin user - Xóa user
 	 */
-	public String hoVaTen;
-	private int namSinh;
 	private String username;
 	private String password;
-	private int chucVu;
+	private String fullname;
+	private int role;
+	private int yearofbirth;
 
 	/*
 	 * CONSTRUCTORS
 	 */
-
-	public User(String hoVaTen, int namSinh, String username, String password, int chucVu) {
-		this.hoVaTen = hoVaTen;
-		this.namSinh = namSinh;
+	public User(String username, String password, String fullname, int role, int yearofbirth) {
 		this.username = username;
 		this.password = password;
-		this.chucVu = chucVu;
+		this.fullname = fullname;
+		this.role = role;
+		this.yearofbirth = yearofbirth;
 	}
-
-	public User() {
-		this.hoVaTen = "";
-		this.namSinh = 1900;
-		this.username = "";
-		this.password = "";
-		this.chucVu = 1;
-	}
-
 	/*
 	 * GETTER SETTER METHODS
 	 */
-	public String getHoVaTen() {
-		return hoVaTen;
-	}
-
-	public void setHoVaTen(String hoVaTen) {
-		this.hoVaTen = hoVaTen;
-	}
-
-	public int getNamSinh() {
-		return namSinh;
-	}
-
-	public void setNamSinh(int namSinh) {
-		this.namSinh = namSinh;
-	}
 
 	public String getUsername() {
 		return username;
@@ -69,12 +44,28 @@ public class User {
 		this.password = password;
 	}
 
-	public int getChucVu() {
-		return chucVu;
+	public String getFullname() {
+		return fullname;
 	}
 
-	public void setChucVu(int chucVu) {
-		this.chucVu = chucVu;
+	public void setFullname(String fullname) {
+		this.fullname = fullname;
+	}
+
+	public int getRole() {
+		return role;
+	}
+
+	public void setRole(int role) {
+		this.role = role;
+	}
+
+	public int getYearofbirth() {
+		return yearofbirth;
+	}
+
+	public void setYearofbirth(int yearofbirth) {
+		this.yearofbirth = yearofbirth;
 	}
 
 }

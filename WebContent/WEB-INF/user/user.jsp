@@ -44,14 +44,14 @@
       	</c:if>
 	  	<c:forEach var="curUser" items="${userList}">
 	  		<tr class="row text-center">
-	          <td class="col-3">${curUser.hoVaTen}</td>
+	          <td class="col-3">${curUser.fullname}</td>
 	          <td class="col-2">${curUser.username}</td>
 	          <td class="col-2">
-	          	<c:if test="${curUser.chucVu==0}">Customer</c:if>
-	          	<c:if test="${curUser.chucVu==1}">Staff</c:if>
-	          	<c:if test="${curUser.chucVu==2}">Manager</c:if>
+	          	<c:if test="${curUser.chucVu==1}">Customer</c:if>
+	          	<c:if test="${curUser.chucVu==2}">Staff</c:if>
+	          	<c:if test="${curUser.chucVu==3}">Manager</c:if>
 	          </td>
-	          <td class="col-2">${curUser.namSinh}</td>
+	          <td class="col-2">${curUser.yearofbirth}</td>
 	          <td class="col-3">
 	            <a class="btn btn-warning" href="<c:url value="${PathConst.USER_EDIT}"/>?username=${curUser.username}">
 	              <i class="fa fa-edit"></i>

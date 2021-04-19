@@ -1,31 +1,26 @@
 package cybersoft.java11.controller;
 
-import java.util.LinkedList;
 import java.util.List;
 
+import cybersoft.java11.connection.ConnectDatabase;
 import cybersoft.java11.model.User;
 
 public class UserController {
 	private List<User> userList;
+	private ConnectDatabase connectDatabase;
 
 	/*
 	 * CONTRUCTORS
 	 */
 	public UserController() {
-		userList = new LinkedList<User>();
-		userList.add(new User("Minh Lam", 2000, "minhlam", "123", 1));
-		userList.add(new User("Kha Vo", 1995, "khavo", "123", 2));
-		userList.add(new User("Ngoc Tuan", 1980, "ngoctuan", "123", 1));
-		userList.add(new User("Duc Duong", 1975, "ducduong", "123", 2));
-		userList.add(new User("Cuong Quan", 2005, "cuongquan", "123", 1));
-		userList.add(new User("Truc Nguyen", 1999, "trucnguyen", "123", 1));
+		connectDatabase = new ConnectDatabase();
 	}
 
 	/*
 	 * METHODS
 	 */
 	public List<User> findAll() {
-		return userList;
+		return connectDatabase.getUserList();
 	}
 
 	public int add(User user) {

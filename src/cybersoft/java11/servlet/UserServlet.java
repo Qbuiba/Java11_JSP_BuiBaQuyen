@@ -31,7 +31,6 @@ public class UserServlet extends HttpServlet {
 	 */
 	@Override
 	public void init() throws ServletException {
-		// TODO Auto-generated method stub
 		userController = new UserController();
 	}
 
@@ -45,7 +44,11 @@ public class UserServlet extends HttpServlet {
 
 		switch (servletPath) {
 		case PathConst.USER_DASHBOARD:
-			userList = userController.findAll();
+			try {
+				userList = userController.findAll();
+			} catch (Exception e) {
+				System.out.println("error " + e.getMessage());
+			}
 			req.setAttribute("userList", userList);
 			req.getRequestDispatcher(UrlConstant.USER_DASHBOARD).forward(req, resp);
 			break;
@@ -89,24 +92,31 @@ public class UserServlet extends HttpServlet {
 	@Override
 	protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 		String servletPath = req.getServletPath();
+		User addUser = null;
+		User updateUser = null;
 
 		switch (servletPath) {
 		case PathConst.USER_ADD:
-			User addUser = new User(req.getParameter("fullname"), Integer.parseInt(req.getParameter("yearofbirth")),
-					req.getParameter("username"), req.getParameter("password"),
-					Integer.parseInt(req.getParameter("role")));
-			userController.add(addUser);
 
+			try {
+				addUser = getUserFromRequest(req);
+			} catch (NumberFormatException e) {
+				System.out.println("error in parsing number at " + e.getMessage());
+			}
+
+			userController.add(addUser);
 			resp.sendRedirect(req.getContextPath() + PathConst.USER_DASHBOARD);
 			break;
 
 		case PathConst.USER_EDIT:
-			User updateUser = new User(req.getParameter("fullname"), Integer.parseInt(req.getParameter("yearofbirth")),
-					req.getParameter("username"), req.getParameter("password"),
-					Integer.parseInt(req.getParameter("role")));
-			String updateUserName = req.getParameter("username");
 
-			if (userController.update(updateUserName, updateUser)) {
+			try {
+				updateUser = getUserFromRequest(req);
+			} catch (NumberFormatException e) {
+				System.out.println("error in parsing number at " + e.getMessage());
+			}
+
+			if (userController.update(updateUser.getUsername(), updateUser)) {
 				System.out.println("Update successfully");
 			} else {
 				System.out.println("Update failed");
@@ -115,6 +125,12 @@ public class UserServlet extends HttpServlet {
 			break;
 		default:
 		}
+	}
+
+	private User getUserFromRequest(HttpServletRequest req) throws NumberFormatException {
+		User user = new User(req.getParameter("username"), req.getParameter("password"), req.getParameter("fullname"),
+				Integer.parseInt(req.getParameter("role")), Integer.parseInt(req.getParameter("yearofbirth")));
+		return user;
 	}
 
 }
